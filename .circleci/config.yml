@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    context: aws_vars
     working_directory: ~/Sites/circleci-demo-javascript-express
     docker:
       - image: circleci/node:4.8.2
