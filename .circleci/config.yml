@@ -34,3 +34,26 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results.xml
+  deploy:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/Sites/circleci-demo-javascript-express
+    steps:
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to S3
+          command: aws s3 sync / s3://last-night-i-dreamt --delete
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
