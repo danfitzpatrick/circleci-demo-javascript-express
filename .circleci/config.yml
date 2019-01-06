@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    context: aws_vars
     working_directory: ~/Sites/circleci-demo-javascript-express
     docker:
       - image: circleci/node:4.8.2
@@ -43,6 +42,7 @@ jobs:
           name: Install awscli
           command: sudo pip install awscli
       - run:
+          context: aws_vars
           name: Deploy to S3
           command: aws s3 sync ~/Sites/circleci-demo-javascript-express s3://last-night-i-dreamt --delete
 
