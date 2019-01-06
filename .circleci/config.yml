@@ -40,7 +40,7 @@ jobs:
     working_directory: ~/Sites/circleci-demo-javascript-express
     steps:
       - run:
-          name: Install awscli!
+          name: Install awscli
           command: sudo pip install awscli
       - run:
           name: Deploy to S3
