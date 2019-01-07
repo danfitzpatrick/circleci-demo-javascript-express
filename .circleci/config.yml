@@ -33,6 +33,10 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results.xml
+      - persist_to_workspace:
+          root: /home/circleci/demo
+          paths:
+            - test
   deploy:
     docker:
       - image: circleci/python:2.7-jessie
@@ -41,9 +45,11 @@ jobs:
       - run:
           name: Install awscli
           command: sudo pip install awscli
+          attach_workspace:
+            - at: /tmp/workspace
       - run:
           name: Deploy to S3
-          command: aws s3 sync ~/Sites/circleci-demo-javascript-express s3://last-night-i-dreamt --delete
+          command: aws s3 sync /tmp/workspace/test s3://last-night-i-dreamt --delete
 
 workflows:
   version: 2
